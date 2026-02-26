@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<link rel="stylesheet" href="estilos/styles.css">
+</head>
+<body>
+<div class="container">
+    <h2>Registrarse</h2>
+<form id="registroForm" action="confirmacion.html" method="POST">
+
+  <input 
+    type="text" 
+    name="nombre" 
+    placeholder="Nombre completo"
+    required
+    minlength="3"
+    pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
+    title="Solo letras y espacios"
+  >
+
+  <input 
+    type="email" 
+    name="email" 
+    placeholder="Correo electrónico"
+    required
+  >
+
+  <input 
+    type="password" 
+    name="password" 
+    id="password"
+    placeholder="Contraseña"
+    required
+    minlength="8"
+  >
+
+  <input 
+    type="password" 
+    id="confirm"
+    placeholder="Confirmar contraseña"
+    required
+  >
+
+  <button type="submit">Registrarse</button>
+
+</form>
+</div>
+
+<script>
+document.getElementById("registroForm").addEventListener("submit", function(e) {
+
+    const nombre = document.querySelector("input[name='nombre']").value.trim();
+    const email = document.querySelector("input[name='email']").value.trim();
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirm").value;
+
+    const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nombreRegex.test(nombre)) {
+        alert("El nombre solo puede contener letras.");
+        e.preventDefault();
+        return;
+    }
+
+    if (!emailRegex.test(email)) {
+        alert("Correo inválido.");
+        e.preventDefault();
+        return;
+    }
+
+    if (password.length < 8) {
+        alert("La contraseña debe tener mínimo 8 caracteres.");
+        e.preventDefault();
+        return;
+    }
+
+    if (password !== confirm) {
+        alert("Las contraseñas no coinciden.");
+        e.preventDefault();
+        return;
+    }
+
+    // Guardar nombre en el navegador
+    localStorage.setItem("usuarioNombre", nombre);
+
+    // Redirigir
+    window.location.href = "confirmacion.html";
+
+});
+</script>
+
+
+
+</body>
+</html>
